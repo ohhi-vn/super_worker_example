@@ -2,6 +2,8 @@
 defmodule SuperWorkerExample.MyModule do
   @doc false
 
+  alias SuperWorker.Supervisor, as: Sup
+
   # function to add a worker to the supervisor.
   def task(n, sleep \\ 1_000) do
     prefix = "[#{inspect Process.get({:supervisor, :worker_id})}, #{inspect self()}]"
@@ -68,10 +70,10 @@ defmodule SuperWorkerExample.MyModule do
   end
 
   def ping_pong(id) do
-    prefix = "[#{inspect Process.get({:supervisor, :worker_id})}, #{inspect self()}]"
+    prefix = "[#{inspect Process.get({:supervisor, :worker_id})}, #{inspect self()}, #{inspect id}]"
     receive do
       {:ping, sender} ->
-        IO.puts prefix <> " Pong to #{inspect sender}"
+        IO.puts prefix <> ", send :pong to #{inspect sender}"
         send(sender, {:pong, self()})
 
       msg -> IO.puts prefix <> " task received: #{inspect msg}"

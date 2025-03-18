@@ -13,8 +13,15 @@ defmodule SuperWorkerExample.MixProject do
 
   # Run "mix help compile.app" to learn about applications.
   def application do
+    dev_app =
+      case Mix.env() do
+        :dev -> [:observer, :wx]
+        _ -> []
+      end
+
+
     [
-      extra_applications: [:logger],
+      extra_applications: [:logger] ++ dev_app,
       mod: {SuperWorkerExample.Application, []}
     ]
   end
@@ -22,7 +29,7 @@ defmodule SuperWorkerExample.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:super_worker, "~> 0.0.4"}
+      {:super_worker, "~> 0.0.7"} #  path: "../../super_worker"}
     ]
   end
 end
