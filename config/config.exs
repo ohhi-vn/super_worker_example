@@ -2,7 +2,8 @@ import Config
 
 config :super_worker,
   # Add supervisor by config file.
-  sup_cfg_1: [  # Declare config by config file.
+  # Declare config by config file.
+  sup_cfg_1: [
     options: [
       number_of_partitions: 2,
       link: true,
@@ -10,21 +11,22 @@ config :super_worker,
     ],
     groups: [
       group1: [
-        options: [
-          restart_strategy: :one_for_all
-        ],
+        restart_strategy: :one_for_all,
         workers: [
-          worker1: [
+          [
+            options: [
+              id: :worker1
+            ],
             task: {SuperWorkerExample.MyModule, :task, [15]}
           ],
-          worker2: [
+          [
             options: [
-
+              id: :worker2
             ],
             task: {SuperWorkerExample.MyModule, :task_crash, [15, 5]}
           ]
         ]
-      ],
+      ]
     ],
     chains: [
       chain1: [
@@ -38,12 +40,16 @@ config :super_worker,
           num_workers: 1
         ],
         workers: [
-          worker1: [
+          [
+            options: [
+              id: :worker1
+            ],
             task: {SuperWorkerExample.MyModule, :task, [15]}
           ],
-          worker2: [
+          [
             options: [
-              num_workers: 5,
+              id: :worker2,
+              num_workers: 5
               # restart_strategy: :transient
             ],
             task: {SuperWorkerExample.MyModule, :task_crash, [15, 5]}

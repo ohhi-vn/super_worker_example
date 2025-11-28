@@ -19,7 +19,6 @@ defmodule SuperWorkerExample.MixProject do
         _ -> []
       end
 
-
     [
       extra_applications: [:logger] ++ dev_app,
       mod: {SuperWorkerExample.Application, []}
@@ -29,7 +28,8 @@ defmodule SuperWorkerExample.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:super_worker, "~> 0.0.7"} #  path: "../../super_worker"}
+      #  path: "../../super_worker"}
+      {:super_worker, "~> 0.3.2"}
     ]
   end
 end
